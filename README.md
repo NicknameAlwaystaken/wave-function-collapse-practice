@@ -4,4 +4,4 @@ Starting small, writing in Rust. Let's see how far I get :)
 <br>
 Iteration 1
 <br>
-[](iteration-1.png)
+![](iteration-1.png)
