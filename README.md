@@ -2,11 +2,11 @@
 Starting small, writing in Rust. Let's see how far I get :)
 <br>
 <br>
-Iteration 1
+App and Output generation showcase
 <br>
-![](iteration-1.png)
+![](generation_finished_app.png)
 <br>
 <br>
-Iteration 2
+JSON Tool for App - Rule Editor
 <br>
-![](iteration-2.png)
+![](rule_json_editor_tool.png)
