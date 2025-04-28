@@ -1,0 +1,15 @@
+skew.png 100.0
+dskew.png 100.0
+component.png 200.0
+transition.png 10.0
+wire.png 10.0
+bridge.png 10.0
+corner.png 50.0
+connection.png 200.0
+turn.png 100.0
+substrate.png 100.0
+viad.png 1.0
+vias.png 1.0
+substrate.png 100.0
+t.png 100.0
+track.png 100.0

@@ -1,0 +1,1119 @@
+{
+  "connections": {},
+  "tiles": {
+    "leaf.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          }
+        ]
+      }
+    },
+    "pibel.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          }
+        ]
+      }
+    },
+    "random1.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 90
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 180
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 90
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 180
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 90
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 180
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "smilie.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 90
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 180
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 270
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          }
+        ]
+      }
+    },
+    "salamaberrr.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "leaf.png",
+            "rotation": 90
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 180
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 270
+          },
+          {
+            "name": "leaf.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 0
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 90
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 180
+          },
+          {
+            "name": "pibel.png",
+            "rotation": 270
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 0
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 90
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 180
+          },
+          {
+            "name": "salamaberrr.png",
+            "rotation": 270
+          }
+        ]
+      }
+    },
+    "smilie.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 90
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 180
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 90
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 180
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 90
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 180
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "random1.png",
+            "rotation": 90
+          },
+          {
+            "name": "random1.png",
+            "rotation": 180
+          },
+          {
+            "name": "random1.png",
+            "rotation": 270
+          },
+          {
+            "name": "random1.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 0
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 90
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 180
+          },
+          {
+            "name": "smilie.png",
+            "rotation": 270
+          }
+        ]
+      }
+    }
+  }
+}
