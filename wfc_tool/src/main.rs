@@ -1,10 +1,16 @@
-use std::{borrow::{Borrow, BorrowMut}, cell::{RefCell, RefMut}, collections::HashMap, fs, ops::Sub, rc::Rc};
+use std::{borrow::{Borrow, BorrowMut}, cell::{Ref, RefCell, RefMut}, collections::HashMap, fs, ops::Sub, path::Path, rc::Rc};
 
-use eframe::{egui::{self, vec2, TextureHandle}, epaint::Vertex};
+use eframe::{egui::{self, vec2, ColorImage, Context, TextureHandle, Vec2}, epaint::Vertex};
+use image::ImageReader;
 use serde::Serialize;
 use serde_json::{json, Value};
 use strum_macros::EnumIter;
 use strum::IntoEnumIterator;
+
+#[derive(Clone, PartialEq)]
+struct Cell {
+    kind: CellKind,
+}
 
 #[derive(Clone, PartialEq)]
 struct Tile {
@@ -14,13 +20,9 @@ struct Tile {
 }
 
 #[derive(Clone, PartialEq)]
-struct Cell {
-    kind: CellKind,
-}
-
-#[derive(Clone, PartialEq)]
 struct CommonPattern {
     name: String,
+    texture: egui::TextureHandle,
     connections: PatternConnections,
 }
 
@@ -35,6 +37,7 @@ struct TileRulesEditorApp {
     selected_plus: Option<Selection>,
     tile_zoom: f32,
     common_patterns: HashMap<String, Rc<RefCell<CommonPattern>>>,
+    icon_sizes: Vec2,
 }
 
 #[derive(Clone, PartialEq)]
@@ -66,7 +69,10 @@ enum PatternEntry {
         tile: Rc<RefCell<Tile>>,
         rotation: Rotation,
     },
-    CommonPattern(Rc<RefCell<CommonPattern>>),
+    CommonPattern {
+        pattern: Rc<RefCell<CommonPattern>>,
+        rotation: Rotation,
+    },
 }
 
 #[derive(Clone, PartialEq)]
@@ -97,6 +103,48 @@ enum Direction {
     Right,
     Bottom,
     Left,
+}
+
+#[derive(Clone)]
+enum SelectedThing {
+    Tile(Rc<RefCell<Tile>>),
+    CommonPattern(Rc<RefCell<CommonPattern>>),
+}
+
+impl SelectedThing {
+    pub fn connections(&self) -> Ref<'_, PatternConnections> {
+        match self {
+            SelectedThing::Tile(tile_rc_ref) => {
+                let tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
+                Ref::map(tile_rc.borrow(), |tile: &Tile| {
+                    &tile.connections
+                })
+            }
+            SelectedThing::CommonPattern(pattern_rc_ref) => {
+                let pattern_rc: &RefCell<CommonPattern> = pattern_rc_ref.borrow();
+                Ref::map(pattern_rc.borrow(), |pattern: &CommonPattern| {
+                    &pattern.connections
+                })
+            }
+        }
+    }
+
+    pub fn texture(&self) -> Ref<'_, egui::TextureHandle> {
+        match self {
+            SelectedThing::Tile(tile_rc_ref) => {
+                let tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
+                Ref::map(tile_rc.borrow(), |tile: &Tile| {
+                    &tile.texture
+                })
+            }
+            SelectedThing::CommonPattern(pattern_rc_ref) => {
+                let pattern_rc: &RefCell<CommonPattern> = pattern_rc_ref.borrow();
+                Ref::map(pattern_rc.borrow(), |pattern: &CommonPattern| {
+                    &pattern.texture
+                })
+            }
+        }
+    }
 }
 
 impl Direction {
@@ -231,9 +279,10 @@ impl Tile {
 }
 
 impl CommonPattern {
-    fn new(name: String) -> Self {
+    fn new(name: String, texture: TextureHandle) -> Self {
         Self {
             name,
+            texture,
             connections: PatternConnections::new(),
         }
     }
@@ -261,8 +310,9 @@ impl TileRulesEditorApp {
             selected: None,
             selection_state: SelectionState::Normal,
             selected_plus: None,
-            tile_zoom: 3.0,
+            tile_zoom: 1.0,
             common_patterns: HashMap::new(),
+            icon_sizes: egui::Vec2::splat(40.0),
         }
     }
 
@@ -276,7 +326,7 @@ impl TileRulesEditorApp {
         }
 
         self.common_patterns
-            .insert(name.clone(), Rc::new(RefCell::new(CommonPattern::new(name))));
+            .insert(name.clone(), Rc::new(RefCell::new(CommonPattern::new(name, self.symbols.get("pattern_placeholder_1").unwrap().clone()))));
     }
 
     fn selected(&self) -> Option<&Selection> {
@@ -358,10 +408,77 @@ impl TileRulesEditorApp {
         }
     }
 
+    pub fn save_rules_to_json(&self, path: &str) -> Result<(), String> {
+        // `tiles` is your HashMap<String, Rc<RefCell<Tile>>>
+        let mut tiles_obj = serde_json::Map::new();
+
+        for (name, tile_rc_ref) in &self.tiles {
+            let tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
+            let tile: &Tile = &tile_rc.borrow();
+
+            let tile_json = json!({
+                "top":    side_to_json(&tile.connections.top),
+                "right":  side_to_json(&tile.connections.right),
+                "left":   side_to_json(&tile.connections.left),
+                "bottom": side_to_json(&tile.connections.bottom),
+            });
+
+            tiles_obj.insert(name.clone(), tile_json);
+        }
+
+        // -------------------- save common_patterns --------------------
+        fn side_from_entries(entries: &[PatternEntry]) -> serde_json::Value {
+            json!({ "allow": entries.iter().map(|entry| match entry {
+                PatternEntry::Tile { tile: tile_rc_ref, rotation } => {
+                    let tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
+                    let tile: &Tile = &tile_rc.borrow();
+                    let name = tile.name.clone();
+                    let rotation = rotation.degrees() as u16;
+                    json!({
+                        "name": name,
+                        "rotation": rotation,
+                    })
+                },
+                PatternEntry::CommonPattern { pattern: pattern_rc_ref, rotation } => {
+                    let pattern_rc: &RefCell<CommonPattern> = pattern_rc_ref.borrow();
+                    let pattern: &CommonPattern = &pattern_rc.borrow();
+                    let name = pattern.name.clone();
+                    let rotation = rotation.degrees() as u16;
+                    json!({
+                        "name": name,
+                        "rotation": rotation,
+                    })
+                },
+            }).collect::<Vec<_>>() })
+        }
+
+        let mut conns_obj = serde_json::Map::new();
+        for (name, pattern_rc_ref) in &self.common_patterns {
+            let pattern_rc: &RefCell<CommonPattern> = pattern_rc_ref.borrow();
+            let pattern: &CommonPattern = &pattern_rc.borrow();
+            let pattern_json = json!({
+                "top":    side_from_entries(&pattern.connections.top),
+                "right":  side_from_entries(&pattern.connections.right),
+                "left":   side_from_entries(&pattern.connections.left),
+                "bottom": side_from_entries(&pattern.connections.bottom),
+            });
+            conns_obj.insert(name.clone(), pattern_json);
+        }
+
+        // -------------------- save file --------------------
+        let root = json!({
+            "connections": conns_obj,
+            "tiles": tiles_obj,
+        });
+
+        std::fs::write(path, serde_json::to_string_pretty(&root).unwrap())
+            .map_err(|e| format!("Failed to save file: {e}"))
+    }
+
     /// Load neighbour rules from a JSON file produced by the editor.
     /// * Ignores the `"connections"` section entirely.
     /// * Only looks at `"allow"` lists (skips `"include"` / `"exclude"` if they exist).
-    pub fn load_rules_from_json(&mut self, path: &str) -> Result<(), String> {
+    pub fn load_rules_from_json(&mut self, ctx: &egui::Context, path: &str) -> Result<(), String> {
         let text = std::fs::read_to_string(path)
             .map_err(|e| format!("Failed to read file: {e}"))?;
         let root: serde_json::Value = serde_json::from_str(&text)
@@ -428,8 +545,96 @@ impl TileRulesEditorApp {
             tile_rc.borrow_mut().connections = conns;
         }
 
+        // ---------- common-patterns  ------------------------------------------
+        self.common_patterns.clear();
+
+        let placeholder_texture = load_placeholder_texture(ctx);
+
+        // first pass: create all patterns with empty connections
+        if let Some(conns_obj) = root.get("connections").and_then(|v| v.as_object()) {
+            for (pat_name, _) in conns_obj {
+                let pat = CommonPattern {
+                    name: pat_name.clone(),
+                    texture: placeholder_texture.clone(),
+                    connections: PatternConnections::new(),
+                };
+                self.common_patterns
+                    .insert(pat_name.clone(), Rc::new(RefCell::new(pat)));
+            }
+
+            // second pass: fill the side lists
+            let rot_from_u16 = |d: u16| match d {
+                90 => Rotation::R90,
+                180 => Rotation::R180,
+                270 => Rotation::R270,
+                _ => Rotation::R0,
+            };
+
+            for (pat_name, pat_val) in conns_obj {
+                let pat_rc_ref: Rc<RefCell<CommonPattern>> = match self.common_patterns.get(pat_name) {
+                    Some(rc) => Rc::clone(rc),
+                    None => continue, // should not happen
+                };
+
+                let mut conns = PatternConnections::new();
+                for (side_key, dest_vec) in [
+                    ("top", &mut conns.top),
+                    ("right", &mut conns.right),
+                    ("left", &mut conns.left),
+                    ("bottom", &mut conns.bottom),
+                ] {
+                    if let Some(arr) = pat_val.get(side_key).and_then(take_allow_side) {
+                        for entry in arr {
+                            if let (Some(name_v), Some(rot_v)) =
+                                (entry.get("name"), entry.get("rotation"))
+                            {
+                                let name = name_v.as_str().unwrap_or_default();
+                                let rot = rot_from_u16(rot_v.as_u64().unwrap_or(0) as u16);
+
+                                if let Some(tile_rc) = self.tiles.get(name) {
+                                    dest_vec.push(PatternEntry::Tile {
+                                        tile: Rc::clone(tile_rc),
+                                        rotation: rot,
+                                    });
+                                } else if let Some(other_pat_rc) = self.common_patterns.get(name) {
+                                    dest_vec.push(PatternEntry::CommonPattern {
+                                        pattern: Rc::clone(other_pat_rc),
+                                        rotation: rot,
+                                    });
+                                } // else: unknown name ⇒ skip
+                            }
+                        }
+                    }
+                }
+
+                let pat_rc: &RefCell<CommonPattern> = pat_rc_ref.borrow();
+
+                pat_rc.borrow_mut().connections = conns;
+            }
+        }
+
         Ok(())
     }
+}
+
+fn load_placeholder_texture(ctx: &Context) -> TextureHandle {
+    println!("Current dir: {}", std::env::current_dir().unwrap().display());
+
+    let symbols_path = Path::new("wfc_tool/src/assets/image/symbols/");
+    let img_path = symbols_path.join("pattern_placeholder_1.png");
+
+    let img = ImageReader::open(img_path)
+        .expect("Failed to open placeholder image")
+        .decode()
+        .expect("Failed to decode placeholder image");
+
+    let size = [img.width() as usize, img.height() as usize];
+    let rgba = img.into_rgba8();
+    let pixels = rgba.into_raw();
+
+    let color_image = ColorImage::from_rgba_unmultiplied(size, &pixels);
+
+    ctx.load_texture("pattern_place_holder_1", color_image, Default::default())
 }
 
 impl eframe::App for TileRulesEditorApp {
@@ -455,7 +660,7 @@ impl eframe::App for TileRulesEditorApp {
 
             if ui.button("Load tiles").clicked() {
                 self.load_tiles(ctx);
-                let _ = self.load_rules_from_json("rules.json");
+                let _ = self.load_rules_from_json(ctx, "rules.json");
             }
         });
 
@@ -480,8 +685,10 @@ impl eframe::App for TileRulesEditorApp {
                         {
                             let tile: &Tile = &tile_rc.borrow();
 
+                            let image = egui::Image::new(&tile.texture).fit_to_exact_size(self.icon_sizes);
+
                             ui.add(
-                                egui::ImageButton::new(&tile.texture)
+                                egui::ImageButton::new(image)
                                     .frame(false)
                                     .selected(is_selected)
                                     .sense(egui::Sense::click()),
@@ -512,52 +719,78 @@ impl eframe::App for TileRulesEditorApp {
                                                     Direction::Bottom => &mut selected_tile.connections.bottom,
                                                     Direction::Left => &mut selected_tile.connections.left,
                                                 };
-                                                if primary_clicked {
-                                                    for rot in Rotation::iter() {
-                                                        let exists = connection_list.iter().any(|entry|
-                                                            matches!(entry,
-                                                                PatternEntry::Tile { tile: existing, rotation: r }
-                                                                if Rc::ptr_eq(existing, tile_rc_ref) && *r == rot
-                                                            )
-                                                        );
-                                                        if exists {
-                                                            continue;
-                                                        }
-                                                        connection_list.push(PatternEntry::Tile {
-                                                            tile: Rc::clone(tile_rc_ref),
-                                                            rotation: rot.clone(),
-                                                        });
 
-                                                        // Check that the inserted tile is not
-                                                        // itself, so it doesn't try to duplicate
-                                                        // and run into issues
-                                                        if !Rc::ptr_eq(tile_rc_ref, selected_tile_rc_ref) {
-                                                            let inserted_tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
-                                                            let mut inserted_tile: std::cell::RefMut<'_, Tile> = inserted_tile_rc.borrow_mut();
-
-                                                            let mirror = direction.clone().opposite();
-                                                            let reflected_side = mirror.rotated_ccw_by(rot.clone());
-
-                                                            let mirror_list = match reflected_side {
-                                                                Direction::Top => &mut inserted_tile.connections.top,
-                                                                Direction::Right => &mut inserted_tile.connections.right,
-                                                                Direction::Left => &mut inserted_tile.connections.left,
-                                                                Direction::Bottom => &mut inserted_tile.connections.bottom,
-                                                            };
-
-                                                            let new_rotation = Rotation::R0.rotated_ccw_by(rot.clone());
-
-                                                            mirror_list.push(PatternEntry::Tile {
-                                                                tile: Rc::clone(selected_tile_rc_ref),
-                                                                rotation: new_rotation,
-                                                            });
-                                                        }
-
-                                                        break;
+                                                for rot in Rotation::iter() {
+                                                    let exists = connection_list.iter().any(|entry|
+                                                        matches!(entry,
+                                                            PatternEntry::Tile { tile: existing, rotation: r }
+                                                            if Rc::ptr_eq(existing, tile_rc_ref) && *r == rot
+                                                        )
+                                                    );
+                                                    if exists {
+                                                        continue;
                                                     }
+                                                    connection_list.push(PatternEntry::Tile {
+                                                        tile: Rc::clone(tile_rc_ref),
+                                                        rotation: rot.clone(),
+                                                    });
+
+                                                    // Check that the inserted tile is not
+                                                    // itself, so it doesn't try to duplicate
+                                                    // and run into issues
+                                                    if !Rc::ptr_eq(tile_rc_ref, selected_tile_rc_ref) {
+                                                        let inserted_tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
+                                                        let mut inserted_tile: std::cell::RefMut<'_, Tile> = inserted_tile_rc.borrow_mut();
+
+                                                        let mirror = direction.clone().opposite();
+                                                        let reflected_side = mirror.rotated_ccw_by(rot.clone());
+
+                                                        let mirror_list = match reflected_side {
+                                                            Direction::Top => &mut inserted_tile.connections.top,
+                                                            Direction::Right => &mut inserted_tile.connections.right,
+                                                            Direction::Left => &mut inserted_tile.connections.left,
+                                                            Direction::Bottom => &mut inserted_tile.connections.bottom,
+                                                        };
+
+                                                        let new_rotation = Rotation::R0.rotated_ccw_by(rot.clone());
+
+                                                        mirror_list.push(PatternEntry::Tile {
+                                                            tile: Rc::clone(selected_tile_rc_ref),
+                                                            rotation: new_rotation,
+                                                        });
+                                                    }
+
+                                                    break;
                                                 }
                                             }
                                             Selection::CommonPattern(selected_pattern_rc_ref) => {
+                                                let selected_pattern_rc: &RefCell<CommonPattern> = selected_pattern_rc_ref.borrow();
+                                                let mut selected_pattern: std::cell::RefMut<'_, CommonPattern> = selected_pattern_rc.borrow_mut();
+
+                                                let connection_list = match direction {
+                                                    Direction::Top => &mut selected_pattern.connections.top,
+                                                    Direction::Right => &mut selected_pattern.connections.right,
+                                                    Direction::Bottom => &mut selected_pattern.connections.bottom,
+                                                    Direction::Left => &mut selected_pattern.connections.left,
+                                                };
+
+                                                for rot in Rotation::iter() {
+                                                    let exists = connection_list.iter().any(|entry|
+                                                        matches!(entry,
+                                                            PatternEntry::Tile { tile: existing, rotation: r }
+                                                            if Rc::ptr_eq(existing, tile_rc_ref) && *r == rot
+                                                        )
+                                                    );
+                                                    if exists {
+                                                        continue;
+                                                    }
+                                                    connection_list.push(PatternEntry::Tile {
+                                                        tile: Rc::clone(tile_rc_ref),
+                                                        rotation: rot.clone(),
+                                                    });
+
+                                                    break;
+                                                }
                                             }
                                             Selection::Insert(_) => {
 
@@ -587,22 +820,22 @@ impl eframe::App for TileRulesEditorApp {
             let zoom_label = format!("Tile View Zoom {:.1}x", self.tile_zoom);
 
             ui.add(
-                egui::Slider::new(&mut self.tile_zoom, 1.0..=10.0)
+                egui::Slider::new(&mut self.tile_zoom, 0.5..=10.0)
                     .text(zoom_label),
             );
 
             ui.label("Common Patterns:");
             ui.horizontal(|ui| {
-                let size = egui::Vec2::splat(40.0);
                 for (name, pattern_rc_ref) in self.common_patterns.iter() {
-                    let pattern_rc: &RefCell<CommonPattern> = pattern_rc_ref.borrow();
-                    let pattern: &CommonPattern = &pattern_rc.borrow();
+                    let is_selected = matches!(
+                        self.selected(),
+                        Some(Selection::CommonPattern(selection_pattern_rc_ref)) if selection_pattern_rc_ref == pattern_rc_ref
+                    );
 
-                    ui.label(format!("{}", &pattern.name));
-
-                    let is_selected = matches!(self.selected(), Some(Selection::CommonPattern(selection_pattern_rc_ref)) if name == &pattern.name);
-
-                    let image = egui::Image::new(&self.symbols["grey_plus"]).fit_to_exact_size(size);
+                    let image = {
+                        let pattern: Ref<CommonPattern> = (**pattern_rc_ref).borrow();
+                        egui::Image::new(&pattern.texture).fit_to_exact_size(self.icon_sizes)
+                    };
 
                     let image_response = ui.add(
                         egui::ImageButton::new(image)
@@ -612,7 +845,71 @@ impl eframe::App for TileRulesEditorApp {
                     );
 
                     if image_response.clicked() {
-                        self.selected = Some(Selection::CommonPattern(pattern_rc_ref.clone()));
+                        if let SelectionState::Inserting = self.selection_state {
+                            if let Some(Selection::Insert(ref direction)) = self.selected_plus {
+                                if let Some(Selection::Tile(selected_tile_rc_ref)) = &self.selected {
+
+                                    let selected_tile_cell: &RefCell<Tile> = selected_tile_rc_ref.borrow();
+                                    let mut selected_tile: RefMut<Tile> = selected_tile_cell.borrow_mut();
+
+                                    let selected_side_vec = match direction {
+                                        Direction::Top => &mut selected_tile.connections.top,
+                                        Direction::Right => &mut selected_tile.connections.right,
+                                        Direction::Bottom => &mut selected_tile.connections.bottom,
+                                        Direction::Left => &mut selected_tile.connections.left,
+                                    };
+
+                                    // Access clicked CommonPattern
+                                    /*
+                                    let pattern_cell: &RefCell<CommonPattern> = pattern_rc_ref.borrow();
+                                    let pattern = pattern_cell.borrow();
+                                    */
+
+                                    let pattern: Ref<CommonPattern> = (**pattern_rc_ref).borrow();
+
+                                    let source_vec = match direction {
+                                        Direction::Top => &pattern.connections.top,
+                                        Direction::Right => &pattern.connections.right,
+                                        Direction::Bottom => &pattern.connections.bottom,
+                                        Direction::Left => &pattern.connections.left,
+                                    };
+
+                                    // Insert all entries from the clicked CommonPattern's side
+                                    for entry in source_vec.iter() {
+                                        match entry {
+                                            PatternEntry::Tile { tile, rotation } => {
+                                                if Rc::ptr_eq(tile, selected_tile_rc_ref) {
+                                                    println!("Skipped copying tile because it is the selected tile itself!");
+                                                    continue; // skip this entry
+                                                }
+
+                                                let tile_ref: Ref<Tile> = (**tile).borrow();
+                                                let has_common = tile_ref.connections.top.iter().chain(tile_ref.connections.right.iter())
+                                                    .chain(tile_ref.connections.bottom.iter())
+                                                    .chain(tile_ref.connections.left.iter())
+                                                    .any(|conn| matches!(conn, PatternEntry::CommonPattern { .. }));
+
+                                                if !has_common {
+                                                    selected_side_vec.push(PatternEntry::Tile {
+                                                        tile: Rc::clone(tile),
+                                                        rotation: *rotation,
+                                                    });
+                                                } else {
+                                                    // Skip tiles that themselves link to a CommonPattern (would cause recursion)
+                                                    println!("Skipped copying tile {} because it has a CommonPattern link!", tile_ref.name);
+                                                }
+                                            }
+                                            PatternEntry::CommonPattern { .. } => {
+                                                // Still skip copying any CommonPattern directly
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            // Not inserting, just normally select the CommonPattern
+                            self.selected = Some(Selection::CommonPattern(pattern_rc_ref.clone()));
+                        }
                     }
 
                     if is_selected {
@@ -632,49 +929,24 @@ impl eframe::App for TileRulesEditorApp {
             }
 
             if ui.button("Save to JSON").clicked() {
-                // `tiles` is your HashMap<String, Rc<RefCell<Tile>>>
-                let mut tiles_obj = serde_json::Map::new();
-
-                for (name, tile_rc_ref) in &self.tiles {
-                    let tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
-                    let tile: &Tile = &tile_rc.borrow();
-
-                    let tile_json = json!({
-                        "top":    side_to_json(&tile.connections.top),
-                        "right":  side_to_json(&tile.connections.right),
-                        "left":   side_to_json(&tile.connections.left),
-                        "bottom": side_to_json(&tile.connections.bottom),
-                    });
-
-                    tiles_obj.insert(name.clone(), tile_json);
-                }
-
-                let root = json!({"connections": {}, "tiles": tiles_obj });
-
                 let output_file = "rules.json";
-
-                match std::fs::write(&output_file, serde_json::to_string_pretty(&root).unwrap()) {
-                    Ok(_)  => eprintln!("JSON saved to {}", output_file),
-                    Err(e) => eprintln!("JSON save failed: {e:?}"),
-                }
+                self.save_rules_to_json(output_file);
             }
 
-            let selected_tile_rc = match &self.selected {
-                Some(Selection::Tile(tile_rc_ref)) => Some(tile_rc_ref),
+            let selected: Option<SelectedThing> = match &self.selected {
+                Some(Selection::Tile(tile_rc)) => Some(SelectedThing::Tile(Rc::clone(tile_rc))),
+                Some(Selection::CommonPattern(pattern_rc)) => Some(SelectedThing::CommonPattern(Rc::clone(pattern_rc))),
                 _ => None,
             };
 
-            if let Some(tile_rc_ref) = selected_tile_rc {
+            if let Some(selected) = selected {
                 // BEFORE building the UI
                 let mut clicked: Option<(usize, usize, egui::PointerButton)> = None;
                 let ( top_len, bottom_len, left_len, right_len ) = {
-                    let tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
-                    let tile: &Tile = &tile_rc.borrow();
-
-                    let top_len = tile.connections.top.len();
-                    let bottom_len = tile.connections.bottom.len();
-                    let left_len = tile.connections.left.len();
-                    let right_len = tile.connections.right.len();
+                    let top_len = selected.connections().top.len();
+                    let bottom_len = selected.connections().bottom.len();
+                    let left_len = selected.connections().left.len();
+                    let right_len = selected.connections().right.len();
 
                     let rows = top_len + 3 + bottom_len; // center already counts as 1
                     let cols = left_len + 3 + right_len; // center already counts as 1
@@ -685,10 +957,10 @@ impl eframe::App for TileRulesEditorApp {
                     let mut grid = vec![vec![Cell { kind: CellKind::Empty }; cols]; rows];
 
                     // Place the center tile
-                    grid[center_y][center_x] = Cell { kind: CellKind::Tile{ texture: tile.texture.clone(), rotation: Rotation::R0 }};
+                    grid[center_y][center_x] = Cell { kind: CellKind::Tile{ texture: selected.texture().clone(), rotation: Rotation::R0 }};
 
                     // Fill top connections
-                    for (i, pattern_entry) in tile.connections.top.iter().enumerate() {
+                    for (i, pattern_entry) in selected.connections().top.iter().enumerate() {
                         let y = center_y - (i + 1);
                         let (texture, rotation) = get_texture_from_entry(pattern_entry);
 
@@ -701,7 +973,7 @@ impl eframe::App for TileRulesEditorApp {
                     grid[0][center_x] = Cell { kind: CellKind::Plus };
 
                     // Fill bottom connections
-                    for (i, pattern_entry) in tile.connections.bottom.iter().enumerate() {
+                    for (i, pattern_entry) in selected.connections().bottom.iter().enumerate() {
                         let y = center_y + (i + 1);
                         let (texture, rotation) = get_texture_from_entry(pattern_entry);
 
@@ -714,7 +986,7 @@ impl eframe::App for TileRulesEditorApp {
                     grid[rows - 1][center_x] = Cell { kind: CellKind::Plus };
 
                     // Fill left connections
-                    for (i, pattern_entry) in tile.connections.left.iter().enumerate() {
+                    for (i, pattern_entry) in selected.connections().left.iter().enumerate() {
                         let x = center_x - (i + 1);
                         let (texture, rotation) = get_texture_from_entry(pattern_entry);
 
@@ -727,7 +999,7 @@ impl eframe::App for TileRulesEditorApp {
                     grid[center_y][0] = Cell { kind: CellKind::Plus };
 
                     // Fill right connections
-                    for (i, pattern_entry) in tile.connections.right.iter().enumerate() {
+                    for (i, pattern_entry) in selected.connections().right.iter().enumerate() {
                         let x = center_x + (i + 1);
                         let (texture, rotation) = get_texture_from_entry(pattern_entry);
 
@@ -740,7 +1012,7 @@ impl eframe::App for TileRulesEditorApp {
                     grid[center_y][cols - 1] = Cell { kind: CellKind::Plus };
 
                     let available_size = ui.available_size();
-                    let size = tile.texture.size_vec2() * self.tile_zoom;
+                    let size = self.icon_sizes * self.tile_zoom;
 
                     let grid_width = cols as f32 * size.x;
                     let grid_height = rows as f32 * size.y;
@@ -834,7 +1106,7 @@ impl eframe::App for TileRulesEditorApp {
                                                 }
                                             }
                                             CellKind::Empty => {
-                                                ui.add_sized(size, egui::Separator::default());
+                                                ui.allocate_exact_size(size, egui::Sense::click());
                                             }
                                         }
                                     }
@@ -851,53 +1123,41 @@ impl eframe::App for TileRulesEditorApp {
                 };
                 {
                     if let Some((gx, gy, button)) = clicked {
-                        let tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
-
                         let center_x = left_len + 1;
                         let center_y = top_len + 1;
 
-                        // how far from the centre did we click?
                         let dx = gx as isize - center_x as isize;
                         let dy = gy as isize - center_y as isize;
 
-                        // helper that rotates a PatternEntry in-place
-                        let rotate_entry = |entry: &mut PatternEntry| {
-                            if let PatternEntry::Tile { rotation, .. } = entry {
-                                *rotation = rotation.clone().rotated_cw();
-                            }
+                        let (side, idx) = if dx == 0 && dy < 0 {
+                            (Direction::Top, (-dy - 1) as usize)
+                        } else if dx == 0 && dy > 0 {
+                            (Direction::Bottom, (dy - 1) as usize)
+                        } else if dy == 0 && dx < 0 {
+                            (Direction::Left, (-dx - 1) as usize)
+                        } else if dy == 0 && dx > 0 {
+                            (Direction::Right, (dx - 1) as usize)
+                        } else {
+                            return; // click was on center tile, ignore
                         };
 
-                        if dx == 0 && dy < 0 {
-                            // clicked *above* centre → top list, index = |dy| – 1
-                            let idx = (-dy - 1) as usize;
-                            if button == egui::PointerButton::Primary {
-                                rotate_connection_handler(tile_rc_ref, Direction::Top, idx);
-                            } else if button == egui::PointerButton::Secondary {
-                                remove_connection_handler(tile_rc_ref, Direction::Top, idx);
-                            }
-                        } else if dx == 0 && dy > 0 {
-                            // below
-                            let idx = (dy - 1) as usize;
-                            if button == egui::PointerButton::Primary {
-                                rotate_connection_handler(tile_rc_ref, Direction::Bottom, idx);
-                            } else if button == egui::PointerButton::Secondary {
-                                remove_connection_handler(tile_rc_ref, Direction::Bottom, idx);
-                            }
-                        } else if dy == 0 && dx < 0 {
-                            // left
-                            let idx = (-dx - 1) as usize;
-                            if button == egui::PointerButton::Primary {
-                                rotate_connection_handler(tile_rc_ref, Direction::Left, idx);
-                            } else if button == egui::PointerButton::Secondary {
-                                remove_connection_handler(tile_rc_ref, Direction::Left, idx);
-                            }
-                        } else if dy == 0 && dx > 0 {
-                            // right
-                            let idx = (dx - 1) as usize;
-                            if button == egui::PointerButton::Primary {
-                                rotate_connection_handler(tile_rc_ref, Direction::Right, idx);
-                            } else if button == egui::PointerButton::Secondary {
-                                remove_connection_handler(tile_rc_ref, Direction::Right, idx);
+                        if let Some(selected) = &self.selected {
+                            match selected {
+                                Selection::Tile(tile_rc_ref) => {
+                                    match button {
+                                        egui::PointerButton::Primary => rotate_connection_handler(tile_rc_ref, side, idx),
+                                        egui::PointerButton::Secondary => remove_connection_handler(tile_rc_ref, side, idx),
+                                        _ => {}
+                                    }
+                                }
+                                Selection::CommonPattern(pattern_rc_ref) => {
+                                    match button {
+                                        egui::PointerButton::Primary => rotate_connection_handler_common(pattern_rc_ref, side, idx),
+                                        egui::PointerButton::Secondary => remove_connection_handler_common(pattern_rc_ref, side, idx),
+                                        _ => {}
+                                    }
+                                }
+                                _ => {}
                             }
                         }
                     }
@@ -907,6 +1167,124 @@ impl eframe::App for TileRulesEditorApp {
     }
 }
 
+/// Call this whenever you rotate a neighbour tile in the grid.
+/// `side` is the side on *selected* you clicked (Top/Right/…)
+/// `idx`   is the entry index inside that side-vector.
+fn rotate_connection_handler_common(
+    selected_rc_ref: &Rc<RefCell<CommonPattern>>,
+    side: Direction,
+    idx: usize,
+) {
+
+    let mut chosen_rot = None;
+
+    // ─── Pre-check if a free rotation exists ──────────────────────
+    {
+        let a_selected_ref: &RefCell<CommonPattern> = selected_rc_ref.borrow();
+        let a_selected: std::cell::Ref<'_, CommonPattern> = a_selected_ref.borrow();
+
+        let entry = match side {
+            Direction::Top    => a_selected.connections.top.get(idx),
+            Direction::Right  => a_selected.connections.right.get(idx),
+            Direction::Bottom => a_selected.connections.bottom.get(idx),
+            Direction::Left   => a_selected.connections.left.get(idx),
+        };
+
+        let (tile_rc_ref, rotation) = match entry {
+            Some(PatternEntry::Tile { tile, rotation }) => (tile, rotation),
+            _ => {
+                println!("Clicked a CommonPattern or invalid entry, no rotation.");
+                return;
+            }
+        };
+
+        let mut simulated_rot = rotation.clone().rotated_cw(); // start at +90°
+
+        for attempt in 0..3 { // try 90°, 180°, 270°
+            let expected_rot = Rotation::R0.rotated_cw_by(simulated_rot.clone());
+
+            let already_exists = [
+                &a_selected.connections.top,
+                &a_selected.connections.right,
+                &a_selected.connections.bottom,
+                &a_selected.connections.left,
+            ]
+            .iter()
+            .any(|vec| {
+                vec.iter().any(|entry| match entry {
+                    PatternEntry::Tile { tile: existing, rotation: existing_rot } =>
+                        Rc::ptr_eq(existing, tile_rc_ref) && *existing_rot == expected_rot,
+                    _ => false,
+                })
+            });
+
+            println!(
+                "[Pre-check Attempt {attempt}] Trying simulated_rot={:?}, expected_rot={:?} => {}",
+                simulated_rot,
+                expected_rot,
+                if already_exists { "Already exists, rotating further..." } else { "Free, will rotate!" }
+            );
+
+            if !already_exists {
+                chosen_rot = Some(simulated_rot.clone());
+                break; // found a valid free rotation
+            }
+
+            simulated_rot = simulated_rot.rotated_cw();
+        }
+    }
+
+    let chosen_rot = match chosen_rot {
+       Some(rot) => rot,
+        None => {
+            println!("No free rotations available, skipping rotation.");
+            return;
+        }
+    };
+
+    // ─────────────────────────────────────────────────────────────
+    //
+    // ─── 1. mutate the selected pattern (A) ──────────────────────
+    let (neighbour_rc_ref, old_rot) = {
+        let a_selected_ref: &RefCell<CommonPattern> = selected_rc_ref.borrow();
+        let mut a_selected: std::cell::RefMut<'_, CommonPattern> = a_selected_ref.borrow_mut();
+        let entry = match side {
+            Direction::Top    => &mut a_selected.connections.top[idx],
+            Direction::Right  => &mut a_selected.connections.right[idx],
+            Direction::Bottom => &mut a_selected.connections.bottom[idx],
+            Direction::Left   => &mut a_selected.connections.left[idx],
+        };
+
+        if let PatternEntry::Tile { tile: b_rc, rotation } = entry {
+            let original_b_rotation = rotation.clone();
+            *rotation = chosen_rot.clone();
+            println!("Selected pattern rotated: {:?} → {:?}", original_b_rotation.clone(), original_b_rotation.clone().rotated_cw());
+            (Rc::clone(&b_rc), original_b_rotation)          // pass B + new rot out
+        } else {
+            return;                                     // clicked a CommonPattern → nothing to do
+        }
+    };
+
+    {
+        let b_selected_ref: &RefCell<Tile> = neighbour_rc_ref.borrow();
+        let b_selected: RefMut<'_, Tile> = b_selected_ref.borrow_mut();
+
+        println!("Neighbour B connections:");
+        for (dir_name, vec) in [
+            ("Top", &b_selected.connections.top),
+            ("Right", &b_selected.connections.right),
+            ("Bottom", &b_selected.connections.bottom),
+            ("Left", &b_selected.connections.left),
+        ] {
+            for (i, entry) in vec.iter().enumerate() {
+                if let PatternEntry::CommonPattern { pattern, rotation } = entry {
+                    let pointer = Rc::ptr_eq(pattern, selected_rc_ref);
+                    println!("  {dir_name}[{i}]: pattern matches selected? {pointer}, rotation={:?}", rotation);
+                }
+            }
+        }
+    }
+}
 
 /// Call this whenever you rotate a neighbour tile in the grid.
 /// `side` is the side on *selected* you clicked (Top/Right/…)
@@ -1098,6 +1476,40 @@ fn rotate_connection_handler(
 /// Call this whenever you *remove* a neighbour tile from the grid.
 /// `side` is the side on *selected* you clicked  (Top / Right / …)
 /// `idx`  is the entry-index inside that side-vector.
+fn remove_connection_handler_common(
+    selected_rc_ref: &Rc<RefCell<CommonPattern>>,
+    side: Direction,
+    idx: usize,
+) {
+    // ── 1. take the entry out of   A   ─────────────────────────────
+    let (neighbour_rc_ref, old_rot) = {
+        // mutable borrow of A *only* for the removal itself
+        let a_selected_ref: &RefCell<CommonPattern> = selected_rc_ref.borrow();
+        let mut a_selected: std::cell::RefMut<'_, CommonPattern> = a_selected_ref.borrow_mut();
+
+        let list = match side {
+            Direction::Top    => &mut a_selected.connections.top,
+            Direction::Right  => &mut a_selected.connections.right,
+            Direction::Bottom => &mut a_selected.connections.bottom,
+            Direction::Left   => &mut a_selected.connections.left,
+        };
+
+        // idx is guaranteed to exist (UI gives valid index)
+        let removed = list.remove(idx);
+
+        // if the removed entry was *not* a CommonPattern, nothing else to do.
+        let (pattern_rc, rot) = match removed {
+            PatternEntry::CommonPattern { pattern, rotation } => (pattern, rotation),
+            _ => return,
+        };
+
+        (pattern_rc, rot)
+    };
+}
+
+/// Call this whenever you *remove* a neighbour tile from the grid.
+/// `side` is the side on *selected* you clicked  (Top / Right / …)
+/// `idx`  is the entry-index inside that side-vector.
 fn remove_connection_handler(
     selected_rc_ref: &Rc<RefCell<Tile>>,
     side: Direction,
@@ -1173,8 +1585,10 @@ fn get_texture_from_entry(entry: &PatternEntry) -> (egui::TextureHandle, Rotatio
             let texture = tile_rc.borrow().texture.clone();
             (texture, rotation.clone())
         },
-        PatternEntry::CommonPattern(_pattern_rc) => {
-            panic!("CommonPattern drawing not handled yet")
+        PatternEntry::CommonPattern { pattern: pattern_rc_ref, rotation } => {
+            let pattern_rc: &RefCell<CommonPattern> = pattern_rc_ref.borrow();
+            let texture = pattern_rc.borrow().texture.clone();
+            (texture, rotation.clone())
         }
     }
 }
@@ -1312,8 +1726,8 @@ fn main() -> eframe::Result<()> {
 
             let mut app = TileRulesEditorApp::new(tile_path, tile_set_name, symbols_path);
             app.load_tiles(&cc.egui_ctx);
-            let _ = app.load_rules_from_json("rules.json");
             app.load_symbols(&cc.egui_ctx);
+            let _ = app.load_rules_from_json(&cc.egui_ctx, "rules.json");
             Ok(Box::new(app))
         }),
     )

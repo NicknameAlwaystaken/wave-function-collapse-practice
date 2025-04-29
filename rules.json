@@ -1,1118 +1,159 @@
 {
-  "connections": {},
+  "connections": {
+    "Unnamed": {
+      "bottom": {
+        "allow": []
+      },
+      "left": {
+        "allow": []
+      },
+      "right": {
+        "allow": []
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "vine5.png",
+            "rotation": 90
+          },
+          {
+            "name": "vine2.png",
+            "rotation": 0
+          },
+          {
+            "name": "vine5.png",
+            "rotation": 270
+          },
+          {
+            "name": "vine2.png",
+            "rotation": 180
+          },
+          {
+            "name": "vine3.png",
+            "rotation": 90
+          }
+        ]
+      }
+    },
+    "Unnamed 1": {
+      "bottom": {
+        "allow": []
+      },
+      "left": {
+        "allow": []
+      },
+      "right": {
+        "allow": []
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "BBC_block.png",
+            "rotation": 0
+          },
+          {
+            "name": "vine3.png",
+            "rotation": 0
+          },
+          {
+            "name": "vine1.png",
+            "rotation": 0
+          },
+          {
+            "name": "vine2.png",
+            "rotation": 90
+          },
+          {
+            "name": "vine5.png",
+            "rotation": 0
+          }
+        ]
+      }
+    }
+  },
   "tiles": {
-    "leaf.png": {
+    "BBC_block.png": {
       "bottom": {
-        "allow": [
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "left": {
-        "allow": [
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "right": {
-        "allow": [
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "top": {
-        "allow": [
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       }
     },
-    "pibel.png": {
+    "vine1.png": {
       "bottom": {
-        "allow": [
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "left": {
-        "allow": [
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "right": {
-        "allow": [
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "top": {
-        "allow": [
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       }
     },
-    "random1.png": {
+    "vine2.png": {
       "bottom": {
-        "allow": [
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 90
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 180
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "left": {
-        "allow": [
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 90
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 180
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "right": {
-        "allow": [
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 90
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 180
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "top": {
-        "allow": [
-          {
-            "name": "smilie.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 90
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 180
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 270
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       }
     },
-    "salamaberrr.png": {
+    "vine3.png": {
       "bottom": {
-        "allow": [
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "left": {
-        "allow": [
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "right": {
-        "allow": [
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "top": {
-        "allow": [
-          {
-            "name": "leaf.png",
-            "rotation": 90
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 180
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 270
-          },
-          {
-            "name": "leaf.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 0
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 90
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 180
-          },
-          {
-            "name": "pibel.png",
-            "rotation": 270
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 0
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 90
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 180
-          },
-          {
-            "name": "salamaberrr.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       }
     },
-    "smilie.png": {
+    "vine4.png": {
       "bottom": {
-        "allow": [
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 90
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 180
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "left": {
-        "allow": [
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 90
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 180
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "right": {
-        "allow": [
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 90
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 180
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
       },
       "top": {
-        "allow": [
-          {
-            "name": "random1.png",
-            "rotation": 90
-          },
-          {
-            "name": "random1.png",
-            "rotation": 180
-          },
-          {
-            "name": "random1.png",
-            "rotation": 270
-          },
-          {
-            "name": "random1.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 0
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 90
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 180
-          },
-          {
-            "name": "smilie.png",
-            "rotation": 270
-          }
-        ]
+        "allow": []
+      }
+    },
+    "vine5.png": {
+      "bottom": {
+        "allow": []
+      },
+      "left": {
+        "allow": []
+      },
+      "right": {
+        "allow": []
+      },
+      "top": {
+        "allow": []
       }
     }
   }

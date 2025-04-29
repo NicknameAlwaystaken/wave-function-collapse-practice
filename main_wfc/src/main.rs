@@ -217,7 +217,7 @@ fn main() -> eframe::Result<()> {
     };
 
     eframe::run_native(
-        "My egui App",
+        "WFC Tile Generator",
         options,
         Box::new(|cc| {
             // This gives us image support:
