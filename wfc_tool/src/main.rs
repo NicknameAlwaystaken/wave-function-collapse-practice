@@ -1,6 +1,6 @@
 use std::{borrow::{Borrow, BorrowMut}, cell::{Ref, RefCell, RefMut}, collections::HashMap, fs, ops::Sub, path::Path, rc::Rc};
 
-use eframe::{egui::{self, vec2, ColorImage, Context, TextureHandle, Vec2}, epaint::Vertex};
+use eframe::egui::{self, ColorImage, Context, TextureHandle, Vec2};
 use image::ImageReader;
 use serde::Serialize;
 use serde_json::{json, Value};
@@ -87,7 +87,9 @@ enum CellKind {
     Tile {
         texture: TextureHandle,
         rotation: Rotation,
+        ptr: *const RefCell<Tile>,
     },
+    Center { texture: TextureHandle },
     Plus,
     Empty,
 }
@@ -246,6 +248,16 @@ impl Rotation {
             Rotation::R180 => Rotation::R0,
             Rotation::R90 => Rotation::R270,
             Rotation::R270 => Rotation::R90,
+        }
+    }
+
+    pub fn from_index(i: usize) -> Rotation {
+        match i % 4 {
+            0 => Rotation::R0,
+            1 => Rotation::R90,
+            2 => Rotation::R180,
+            3 => Rotation::R270,
+            _ => unreachable!(),
         }
     }
 }
@@ -720,48 +732,50 @@ impl eframe::App for TileRulesEditorApp {
                                                     Direction::Left => &mut selected_tile.connections.left,
                                                 };
 
-                                                for rot in Rotation::iter() {
-                                                    let exists = connection_list.iter().any(|entry|
-                                                        matches!(entry,
-                                                            PatternEntry::Tile { tile: existing, rotation: r }
-                                                            if Rc::ptr_eq(existing, tile_rc_ref) && *r == rot
-                                                        )
-                                                    );
-                                                    if exists {
-                                                        continue;
-                                                    }
-                                                    connection_list.push(PatternEntry::Tile {
-                                                        tile: Rc::clone(tile_rc_ref),
-                                                        rotation: rot.clone(),
-                                                    });
+                                                let exists = connection_list.iter().any(|entry|
+                                                    matches!(entry,
+                                                        PatternEntry::Tile { tile: existing, .. }
+                                                        if Rc::ptr_eq(existing, tile_rc_ref)
+                                                    )
+                                                );
 
-                                                    // Check that the inserted tile is not
-                                                    // itself, so it doesn't try to duplicate
-                                                    // and run into issues
-                                                    if !Rc::ptr_eq(tile_rc_ref, selected_tile_rc_ref) {
-                                                        let inserted_tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
-                                                        let mut inserted_tile: std::cell::RefMut<'_, Tile> = inserted_tile_rc.borrow_mut();
-
-                                                        let mirror = direction.clone().opposite();
-                                                        let reflected_side = mirror.rotated_ccw_by(rot.clone());
-
-                                                        let mirror_list = match reflected_side {
-                                                            Direction::Top => &mut inserted_tile.connections.top,
-                                                            Direction::Right => &mut inserted_tile.connections.right,
-                                                            Direction::Left => &mut inserted_tile.connections.left,
-                                                            Direction::Bottom => &mut inserted_tile.connections.bottom,
-                                                        };
-
-                                                        let new_rotation = Rotation::R0.rotated_ccw_by(rot.clone());
-
-                                                        mirror_list.push(PatternEntry::Tile {
-                                                            tile: Rc::clone(selected_tile_rc_ref),
-                                                            rotation: new_rotation,
-                                                        });
-                                                    }
-
-                                                    break;
+                                                if exists {
+                                                    continue;
                                                 }
+
+                                                let rot = Rotation::R0;
+
+                                                connection_list.push(PatternEntry::Tile {
+                                                    tile: Rc::clone(tile_rc_ref),
+                                                    rotation: rot.clone(),
+                                                });
+
+                                                // Check that the inserted tile is not
+                                                // itself, so it doesn't try to duplicate
+                                                // and run into issues
+                                                if !Rc::ptr_eq(tile_rc_ref, selected_tile_rc_ref) {
+                                                    let inserted_tile_rc: &RefCell<Tile> = tile_rc_ref.borrow();
+                                                    let mut inserted_tile: std::cell::RefMut<'_, Tile> = inserted_tile_rc.borrow_mut();
+
+                                                    let mirror = direction.clone().opposite();
+                                                    let reflected_side = mirror.rotated_ccw_by(rot.clone());
+
+                                                    let mirror_list = match reflected_side {
+                                                        Direction::Top => &mut inserted_tile.connections.top,
+                                                        Direction::Right => &mut inserted_tile.connections.right,
+                                                        Direction::Left => &mut inserted_tile.connections.left,
+                                                        Direction::Bottom => &mut inserted_tile.connections.bottom,
+                                                    };
+
+                                                    let new_rotation = Rotation::R0.rotated_ccw_by(rot.clone());
+
+                                                    mirror_list.push(PatternEntry::Tile {
+                                                        tile: Rc::clone(selected_tile_rc_ref),
+                                                        rotation: new_rotation,
+                                                    });
+                                                }
+
+                                                break;
                                             }
                                             Selection::CommonPattern(selected_pattern_rc_ref) => {
                                                 let selected_pattern_rc: &RefCell<CommonPattern> = selected_pattern_rc_ref.borrow();
@@ -930,7 +944,7 @@ impl eframe::App for TileRulesEditorApp {
 
             if ui.button("Save to JSON").clicked() {
                 let output_file = "rules.json";
-                self.save_rules_to_json(output_file);
+                let _ = self.save_rules_to_json(output_file);
             }
 
             let selected: Option<SelectedThing> = match &self.selected {
@@ -941,12 +955,36 @@ impl eframe::App for TileRulesEditorApp {
 
             if let Some(selected) = selected {
                 // BEFORE building the UI
-                let mut clicked: Option<(usize, usize, egui::PointerButton)> = None;
+                let mut clicked: Option<(usize, usize, egui::PointerButton, Option<Direction>)> = None;
+
+                let mut index_map_top: HashMap<(usize, usize), usize> = HashMap::new();
+                let mut index_map_bottom: HashMap<(usize, usize), usize> = HashMap::new();
+                let mut index_map_left: HashMap<(usize, usize), usize> = HashMap::new();
+                let mut index_map_right: HashMap<(usize, usize), usize> = HashMap::new();
+
                 let ( top_len, bottom_len, left_len, right_len ) = {
-                    let top_len = selected.connections().top.len();
-                    let bottom_len = selected.connections().bottom.len();
-                    let left_len = selected.connections().left.len();
-                    let right_len = selected.connections().right.len();
+
+                    // get len out of unique tiles only, no duplications of same tile (regardless
+                    // of rotation)
+                    let top_len = selected.connections().top.iter().filter_map(|entry| match entry {
+                        PatternEntry::Tile { tile, .. } => Some(Rc::as_ptr(tile)),
+                        _ => None,
+                    }).collect::<std::collections::HashSet<_>>().len();
+
+                    let bottom_len = selected.connections().bottom.iter().filter_map(|entry| match entry {
+                        PatternEntry::Tile { tile, .. } => Some(Rc::as_ptr(tile)),
+                        _ => None,
+                    }).collect::<std::collections::HashSet<_>>().len();
+
+                    let left_len = selected.connections().left.iter().filter_map(|entry| match entry {
+                        PatternEntry::Tile { tile, .. } => Some(Rc::as_ptr(tile)),
+                        _ => None,
+                    }).collect::<std::collections::HashSet<_>>().len();
+
+                    let right_len = selected.connections().right.iter().filter_map(|entry| match entry {
+                        PatternEntry::Tile { tile, .. } => Some(Rc::as_ptr(tile)),
+                        _ => None,
+                    }).collect::<std::collections::HashSet<_>>().len();
 
                     let rows = top_len + 3 + bottom_len; // center already counts as 1
                     let cols = left_len + 3 + right_len; // center already counts as 1
@@ -956,56 +994,133 @@ impl eframe::App for TileRulesEditorApp {
 
                     let mut grid = vec![vec![Cell { kind: CellKind::Empty }; cols]; rows];
 
-                    // Place the center tile
-                    grid[center_y][center_x] = Cell { kind: CellKind::Tile{ texture: selected.texture().clone(), rotation: Rotation::R0 }};
+                    grid[center_y][center_x] = Cell {
+                        kind: CellKind::Center { texture: selected.texture().clone() }
+                    };
+
+                    let mut seen_top: HashMap<*const RefCell<Tile>, Vec<Direction>> = HashMap::new();
 
                     // Fill top connections
                     for (i, pattern_entry) in selected.connections().top.iter().enumerate() {
-                        let y = center_y - (i + 1);
-                        let (texture, rotation) = get_texture_from_entry(pattern_entry);
+                        if let PatternEntry::Tile { tile, rotation } = pattern_entry {
+                            let ptr = Rc::as_ptr(tile);
+                            //let connected_side = rotated_direction(Direction::Top.opposite(), *rotation);
+                            let connected_side = Direction::Top.opposite().rotated_ccw_by(*rotation);
 
-                        grid[y][center_x] = Cell {
-                            kind: CellKind::Tile { texture, rotation },
-                        };
+                            let seen_len = seen_top.len();
+                            let directions = seen_top.entry(ptr).or_insert_with(Vec::new);
+
+                            if directions.is_empty() {
+                                let y = center_y - (seen_len + 1);
+                                let (texture, rotation) = get_texture_from_entry(pattern_entry);
+
+                                grid[y][center_x] = Cell {
+                                    kind: CellKind::Tile { texture, rotation, ptr },
+                                };
+                                index_map_top.insert((center_x, y), i);
+                            }
+
+                            directions.push(connected_side);
+
+                            /*
+                            println!(
+                                "Placing visual tile {:?} at ({}, {}) from A's {:?} with rotation {:?}, computed side: {:?}",
+                                ptr,
+                                center_x,
+                                center_y - (seen_len + 1),
+                                Direction::Top, // or Bottom, Left, Right depending on section
+                                rotation,
+                                rotated_direction(Direction::Top.opposite(), *rotation), // or Bottom.opposite(), etc.
+                            );
+                            */
+                        }
                     }
 
                     // Place top plus
                     grid[0][center_x] = Cell { kind: CellKind::Plus };
 
+                    let mut seen_bottom: HashMap<*const RefCell<Tile>, Vec<Direction>> = HashMap::new();
+
                     // Fill bottom connections
                     for (i, pattern_entry) in selected.connections().bottom.iter().enumerate() {
-                        let y = center_y + (i + 1);
-                        let (texture, rotation) = get_texture_from_entry(pattern_entry);
+                        if let PatternEntry::Tile { tile, rotation } = pattern_entry {
+                            let ptr = Rc::as_ptr(tile);
+                            //let connected_side = rotated_direction(Direction::Bottom.opposite(), *rotation);
+                            let connected_side = Direction::Bottom.opposite().rotated_ccw_by(*rotation);
 
-                        grid[y][center_x] = Cell {
-                            kind: CellKind::Tile { texture, rotation },
-                        };
+                            let seen_len = seen_bottom.len();
+                            let directions = seen_bottom.entry(ptr).or_insert_with(Vec::new);
+
+                            if directions.is_empty() {
+                                let y = center_y + (seen_len + 1);
+                                let (texture, rotation) = get_texture_from_entry(pattern_entry);
+
+                                grid[y][center_x] = Cell {
+                                    kind: CellKind::Tile { texture, rotation, ptr },
+                                };
+                                index_map_bottom.insert((center_x, y), i);
+                            }
+
+                            directions.push(connected_side);
+                        }
                     }
 
                     // Place bottom plus
                     grid[rows - 1][center_x] = Cell { kind: CellKind::Plus };
 
+                    let mut seen_left: HashMap<*const RefCell<Tile>, Vec<Direction>> = HashMap::new();
+
                     // Fill left connections
                     for (i, pattern_entry) in selected.connections().left.iter().enumerate() {
-                        let x = center_x - (i + 1);
-                        let (texture, rotation) = get_texture_from_entry(pattern_entry);
+                        if let PatternEntry::Tile { tile, rotation } = pattern_entry {
+                            let ptr = Rc::as_ptr(tile);
+                            //let connected_side = rotated_direction(Direction::Left.opposite(), *rotation);
+                            let connected_side = Direction::Left.opposite().rotated_ccw_by(*rotation);
 
-                        grid[center_y][x] = Cell {
-                            kind: CellKind::Tile { texture, rotation },
-                        };
+                            let seen_len = seen_left.len();
+                            let directions = seen_left.entry(ptr).or_insert_with(Vec::new);
+
+                            if directions.is_empty() {
+                                let x = center_x - (seen_len + 1);
+                                let (texture, rotation) = get_texture_from_entry(pattern_entry);
+
+                                grid[center_y][x] = Cell {
+                                    kind: CellKind::Tile { texture, rotation, ptr },
+                                };
+                                index_map_left.insert((x, center_y), i);
+                            }
+
+                            directions.push(connected_side);
+                        }
                     }
 
                     // Place left plus
                     grid[center_y][0] = Cell { kind: CellKind::Plus };
 
+                    let mut seen_right: HashMap<*const RefCell<Tile>, Vec<Direction>> = HashMap::new();
+
                     // Fill right connections
                     for (i, pattern_entry) in selected.connections().right.iter().enumerate() {
-                        let x = center_x + (i + 1);
-                        let (texture, rotation) = get_texture_from_entry(pattern_entry);
+                        if let PatternEntry::Tile { tile, rotation } = pattern_entry {
+                            let ptr = Rc::as_ptr(tile);
+                            //let connected_side = rotated_direction(Direction::Right.opposite(), *rotation);
+                            let connected_side = Direction::Right.opposite().rotated_ccw_by(*rotation);
 
-                        grid[center_y][x] = Cell {
-                            kind: CellKind::Tile { texture, rotation },
-                        };
+                            let seen_len = seen_right.len();
+                            let directions = seen_right.entry(ptr).or_insert_with(Vec::new);
+
+                            if directions.is_empty() {
+                                let x = center_x + (seen_len + 1);
+                                let (texture, rotation) = get_texture_from_entry(pattern_entry);
+
+                                grid[center_y][x] = Cell {
+                                    kind: CellKind::Tile { texture, rotation, ptr },
+                                };
+                                index_map_right.insert((x, center_y), i);
+                            }
+
+                            directions.push(connected_side);
+                        }
                     }
 
                     // Place right plus
@@ -1034,36 +1149,90 @@ impl eframe::App for TileRulesEditorApp {
                                 ui.horizontal(|ui| {
                                     for (grid_x, cell) in row.iter().enumerate() {
                                         match &cell.kind {
-                                            CellKind::Tile { texture, rotation } => {
+
+                                            CellKind::Center { texture } => {
+                                                let (rect, _) = ui.allocate_exact_size(size, egui::Sense::hover());
+
+                                                draw_texture_rotated(ui, texture, rect.min, size, Rotation::R0);
+
+                                                // highlight the centre tile
+                                                ui.painter().rect_stroke(
+                                                    rect,
+                                                    0.0,
+                                                    egui::Stroke::new(2.5, egui::Color32::YELLOW),
+                                                    egui::StrokeKind::Outside,
+                                                );
+                                            }
+                                            CellKind::Tile { texture, rotation, ptr } => {
                                                 // reserve layout space and get the response
                                                 let (rect, response) = ui.allocate_exact_size(size, egui::Sense::click());
 
                                                 // draw the tile
-                                                draw_texture_rotated(ui, texture, rect.min, size, rotation.clone());
+                                                draw_texture_rotated(ui, texture, rect.min, size, Rotation::R0);
 
-                                                // highlight the centre tile
-                                                if grid_x == center_x && grid_y == center_y {
-                                                    ui.painter().rect_stroke(
-                                                        rect,
-                                                        0.0,
-                                                        egui::Stroke::new(2.5, egui::Color32::YELLOW),
-                                                        egui::StrokeKind::Outside,
-                                                    );
+                                                let directions = if grid_x == center_x && grid_y < center_y {
+                                                    seen_top.get(ptr)
+                                                } else if grid_x == center_x && grid_y > center_y {
+                                                    seen_bottom.get(ptr)
+                                                } else if grid_y == center_y && grid_x < center_x {
+                                                    seen_left.get(ptr)
+                                                } else if grid_y == center_y && grid_x > center_x {
+                                                    seen_right.get(ptr)
+                                                } else {
+                                                    None
+                                                };
+
+                                                if let Some(dirs) = directions {
+                                                    //println!("  → Highlighting directions: {:?}", dirs);
+                                                    draw_border_sides(ui, rect, dirs);
                                                 }
 
                                                 // rotate on left-click, but NOT if it is the centre tile
                                                 if response.clicked_by(egui::PointerButton::Primary)
                                                 && !(grid_x == center_x && grid_y == center_y)
                                                 {
-                                                    println!("Clicked at ({}, {})", grid_x, grid_y);
-                                                    clicked = Some((grid_x, grid_y, egui::PointerButton::Primary));
+                                                    let clicked_side = response.interact_pointer_pos().and_then(|pos| {
+                                                        let local_x = pos.x - rect.min.x;
+                                                        let local_y = pos.y - rect.min.y;
+
+                                                        let rel_x = local_x / rect.width();
+                                                        let rel_y = local_y / rect.height();
+
+                                                        match (rel_x, rel_y) {
+                                                            (_, y) if y < 0.33 => Some(Direction::Top),
+                                                            (_, y) if y > 0.66 => Some(Direction::Bottom),
+                                                            (x, _) if x < 0.33 => Some(Direction::Left),
+                                                            (x, _) if x > 0.66 => Some(Direction::Right),
+                                                            _ => None,
+                                                        }
+                                                    });
+
+                                                    println!("Clicked at ({}, {}) Tile side: {:?}", grid_x, grid_y, clicked_side);
+                                                    clicked = Some((grid_x, grid_y, egui::PointerButton::Primary, clicked_side));
                                                 }
+
                                                 // remove on right_click, but NOT if it is the centre tile
                                                 if response.clicked_by(egui::PointerButton::Secondary)
                                                 && !(grid_x == center_x && grid_y == center_y)
                                                 {
+                                                    let clicked_side = response.interact_pointer_pos().and_then(|pos| {
+                                                        let local_x = pos.x - rect.min.x;
+                                                        let local_y = pos.y - rect.min.y;
+
+                                                        let rel_x = local_x / rect.width();
+                                                        let rel_y = local_y / rect.height();
+
+                                                        match (rel_x, rel_y) {
+                                                            (_, y) if y < 0.33 => Some(Direction::Top),
+                                                            (_, y) if y > 0.66 => Some(Direction::Bottom),
+                                                            (x, _) if x < 0.33 => Some(Direction::Left),
+                                                            (x, _) if x > 0.66 => Some(Direction::Right),
+                                                            _ => None,
+                                                        }
+                                                    });
+
                                                     println!("Clicked at ({}, {})", grid_x, grid_y);
-                                                    clicked = Some((grid_x, grid_y, egui::PointerButton::Secondary));
+                                                    clicked = Some((grid_x, grid_y, egui::PointerButton::Secondary, clicked_side));
                                                 }
                                             }
                                             CellKind::Plus => {
@@ -1122,31 +1291,40 @@ impl eframe::App for TileRulesEditorApp {
                     )
                 };
                 {
-                    if let Some((gx, gy, button)) = clicked {
+                    if let Some((gx, gy, button, Some(clicked_side))) = clicked {
                         let center_x = left_len + 1;
                         let center_y = top_len + 1;
 
                         let dx = gx as isize - center_x as isize;
                         let dy = gy as isize - center_y as isize;
 
-                        let (side, idx) = if dx == 0 && dy < 0 {
-                            (Direction::Top, (-dy - 1) as usize)
+                        let (side, idx_opt) = if dx == 0 && dy < 0 {
+                            (Direction::Top, index_map_top.get(&(gx, gy)).copied())
                         } else if dx == 0 && dy > 0 {
-                            (Direction::Bottom, (dy - 1) as usize)
+                            (Direction::Bottom, index_map_bottom.get(&(gx, gy)).copied())
                         } else if dy == 0 && dx < 0 {
-                            (Direction::Left, (-dx - 1) as usize)
+                            (Direction::Left, index_map_left.get(&(gx, gy)).copied())
                         } else if dy == 0 && dx > 0 {
-                            (Direction::Right, (dx - 1) as usize)
+                            (Direction::Right, index_map_right.get(&(gx, gy)).copied())
                         } else {
-                            return; // click was on center tile, ignore
+                            return; // click was on center tile
+                        };
+
+                        let Some(idx) = idx_opt else {
+                            eprintln!("Clicked cell had no matching connection index");
+                            return;
                         };
 
                         if let Some(selected) = &self.selected {
                             match selected {
                                 Selection::Tile(tile_rc_ref) => {
                                     match button {
-                                        egui::PointerButton::Primary => rotate_connection_handler(tile_rc_ref, side, idx),
-                                        egui::PointerButton::Secondary => remove_connection_handler(tile_rc_ref, side, idx),
+                                        egui::PointerButton::Primary =>  {
+                                            assign_connection_by_index(tile_rc_ref, side, idx, clicked_side);
+                                        },
+                                        egui::PointerButton::Secondary =>  {
+                                            unassign_connection_by_index(tile_rc_ref, side, idx, clicked_side);
+                                        },
                                         _ => {}
                                     }
                                 }
@@ -1165,6 +1343,311 @@ impl eframe::App for TileRulesEditorApp {
             }
         });
     }
+}
+
+fn cw_rotation_from_connection_sides(from: Direction, to: Direction) -> Rotation {
+    for i in 0..4 {
+        let rot = Rotation::from_index(i);
+        let rotated = from.rotated_cw_by(rot);
+        println!("[rotation_from_connection_sides] Trying: {:?}.rotated_cw_by({:?}) = {:?} (target: {:?})",
+            from, rot, rotated, to);
+        if rotated == to {
+            return rot;
+        }
+    }
+    panic!("No rotation found that aligns {:?} to {:?}", from, to);
+}
+
+fn ccw_rotation_from_connection_sides(from: Direction, to: Direction) -> Rotation {
+    for i in 0..4 {
+        let rot = Rotation::from_index(i);
+        let rotated = from.rotated_ccw_by(rot);
+        println!("[rotation_from_connection_sides] Trying: {:?}.rotated_ccw_by({:?}) = {:?} (target: {:?})",
+            from, rot, rotated, to);
+        if rotated == to {
+            return rot;
+        }
+    }
+    panic!("No rotation found that aligns {:?} to {:?}", from, to);
+}
+
+fn find_connection_side_and_index(
+    b_tile: &RefCell<Tile>,
+    a_tile: &Rc<RefCell<Tile>>,
+) -> Option<(Direction, usize, Rotation)> {
+    let b_tile = b_tile.borrow();
+    for &side in &[Direction::Top, Direction::Right, Direction::Bottom, Direction::Left] {
+        let vec = match side {
+            Direction::Top => &b_tile.connections.top,
+            Direction::Right => &b_tile.connections.right,
+            Direction::Bottom => &b_tile.connections.bottom,
+            Direction::Left => &b_tile.connections.left,
+        };
+
+        for (i, entry) in vec.iter().enumerate() {
+            if let PatternEntry::Tile { tile, rotation } = entry {
+                if Rc::ptr_eq(tile, a_tile) {
+                    return Some((side, i, *rotation));
+                }
+            }
+        }
+    }
+    None
+}
+
+fn unassign_connection_by_index(
+    selected_rc_ref: &Rc<RefCell<Tile>>,
+    side: Direction,
+    idx: usize,
+    clicked_side: Direction,
+) {
+    let (b_tile_rc_ref, r_ab) = {
+        let a_selected = (**selected_rc_ref).borrow();
+        let entry = match side {
+            Direction::Top => a_selected.connections.top.get(idx),
+            Direction::Right => a_selected.connections.right.get(idx),
+            Direction::Bottom => a_selected.connections.bottom.get(idx),
+            Direction::Left => a_selected.connections.left.get(idx),
+        };
+
+        match entry {
+            Some(PatternEntry::Tile { tile, rotation }) => (Rc::clone(tile), *rotation),
+            _ => {
+                println!("Invalid entry at {:?}[{}], expected Tile", side, idx);
+                return;
+            }
+        }
+    };
+
+
+    for side in &[Direction::Top, Direction::Right, Direction::Bottom, Direction::Left] {
+        let b_tile = (*b_tile_rc_ref).borrow();
+        let entries = match side {
+            Direction::Top => &b_tile.connections.top,
+            Direction::Right => &b_tile.connections.right,
+            Direction::Bottom => &b_tile.connections.bottom,
+            Direction::Left => &b_tile.connections.left,
+        };
+
+        for (i, entry) in entries.iter().enumerate() {
+            if let PatternEntry::Tile { tile, rotation } = entry {
+                if Rc::ptr_eq(tile, selected_rc_ref) {
+                    println!(
+                        "[B Check] Found A in B({:p}) on side {:?}[{}] with rot {:?}",
+                        b_tile_rc_ref, side, i, rotation
+                    );
+                }
+            }
+        }
+    }
+
+    let new_rot = ccw_rotation_from_connection_sides(side.opposite(), clicked_side);
+
+    // Remove from A (selected tile)
+    {
+        let mut a_selected = (**selected_rc_ref).borrow_mut();
+        let connection_vec = match side {
+            Direction::Top => &mut a_selected.connections.top,
+            Direction::Right => &mut a_selected.connections.right,
+            Direction::Bottom => &mut a_selected.connections.bottom,
+            Direction::Left => &mut a_selected.connections.left,
+        };
+
+        connection_vec.retain(|entry| match entry {
+            PatternEntry::Tile { tile, rotation } =>
+                !(Rc::ptr_eq(tile, &b_tile_rc_ref) && *rotation == new_rot),
+            _ => true,
+        });
+        println!("Removed tile from {:?} with rotation {:?}", side, new_rot);
+    }
+
+    // check that not removing itself
+    if Rc::ptr_eq(selected_rc_ref, &b_tile_rc_ref) {
+        return;
+    }
+
+    let mut b_tile = (*b_tile_rc_ref).borrow_mut();
+
+    let vec = match clicked_side {
+        Direction::Top => &mut b_tile.connections.top,
+        Direction::Right => &mut b_tile.connections.right,
+        Direction::Bottom => &mut b_tile.connections.bottom,
+        Direction::Left => &mut b_tile.connections.left,
+    };
+
+    let b_rot = ccw_rotation_from_connection_sides(clicked_side, side.opposite());
+
+    let before = vec.len();
+    vec.retain(|entry| match entry {
+        PatternEntry::Tile { tile, rotation } =>
+            !(Rc::ptr_eq(tile, selected_rc_ref) && *rotation == b_rot),
+        _ => true,
+    });
+    let after = vec.len();
+
+    if before == after {
+        println!("Warning: reverse entry in B not found");
+    } else {
+        println!("Removed reverse entry from B({:p}) on {:?} with rot {:?}", b_tile_rc_ref, clicked_side, b_rot);
+    }
+}
+
+fn assign_connection_by_index(
+    selected_rc_ref: &Rc<RefCell<Tile>>,
+    side: Direction,
+    idx: usize,
+    clicked_side: Direction,
+) {
+    let (b_tile_rc_ref, _original_rotation) = {
+        let a_selected = (**selected_rc_ref).borrow();
+        let entry = match side {
+            Direction::Top => a_selected.connections.top.get(idx),
+            Direction::Right => a_selected.connections.right.get(idx),
+            Direction::Bottom => a_selected.connections.bottom.get(idx),
+            Direction::Left => a_selected.connections.left.get(idx),
+        };
+
+        match entry {
+            Some(PatternEntry::Tile { tile, rotation }) => {
+                println!(
+                    "[A→B] Trying to assign new connection from A({:p}) to B({:p}) via {:?} click on {:?} (original rotation: {:?})",
+                    selected_rc_ref,
+                    tile,
+                    side,
+                    clicked_side,
+                    rotation
+                );
+                (Rc::clone(tile), *rotation)
+            }
+            _ => {
+                println!("[A→B] Invalid entry at {:?}[{}], expected Tile", side, idx);
+                return;
+            }
+        }
+    };
+
+    let new_rot = ccw_rotation_from_connection_sides(side.opposite(), clicked_side);
+
+    println!(
+        "[A→B] Computed new rotation for B({:p}) is {:?} to align {:?} on {:?}",
+        b_tile_rc_ref,
+        new_rot,
+        side,
+        clicked_side
+    );
+
+    {
+        let mut a_selected = (**selected_rc_ref).borrow_mut();
+
+        let connection_vec = match side {
+            Direction::Top => &mut a_selected.connections.top,
+            Direction::Right => &mut a_selected.connections.right,
+            Direction::Bottom => &mut a_selected.connections.bottom,
+            Direction::Left => &mut a_selected.connections.left,
+        };
+
+        let already_exists = connection_vec.iter().any(|entry| match entry {
+            PatternEntry::Tile { tile, rotation } =>
+                Rc::ptr_eq(tile, &b_tile_rc_ref) && *rotation == new_rot,
+            _ => false,
+        });
+
+        if already_exists {
+            println!("Entry already exists in {:?} with rotation {:?}", side, new_rot);
+            return;
+        }
+
+        connection_vec.push(PatternEntry::Tile {
+            tile: Rc::clone(&b_tile_rc_ref),
+            rotation: new_rot,
+        });
+
+        println!(
+            "[A→B] Pushed new PatternEntry to {:?} of A({:p}) → B({:p}) with rot {:?}",
+            side,
+            selected_rc_ref,
+            b_tile_rc_ref,
+            new_rot
+        );
+
+        // check that not adding itself twice
+        if Rc::ptr_eq(selected_rc_ref, &b_tile_rc_ref) {
+            return;
+        }
+
+        // Push A into B connections
+        if let Some((side_on_b, _idx, old_rot)) = find_connection_side_and_index(&b_tile_rc_ref, selected_rc_ref) {
+            println!(
+                "[B→A] Found old entry in B({:p}) pointing to A({:p}) at {:?} with rotation {:?}",
+                b_tile_rc_ref,
+                selected_rc_ref,
+                side_on_b,
+                old_rot
+            );
+
+            let b_rot = ccw_rotation_from_connection_sides(clicked_side, side.opposite());
+
+            let mut b_tile = (*b_tile_rc_ref).borrow_mut();
+
+            let b_vec = match clicked_side {
+                Direction::Top => &mut b_tile.connections.top,
+                Direction::Right => &mut b_tile.connections.right,
+                Direction::Bottom => &mut b_tile.connections.bottom,
+                Direction::Left => &mut b_tile.connections.left,
+            };
+
+            let already_exists = b_vec.iter().any(|entry| match entry {
+                PatternEntry::Tile { tile, rotation } =>
+                    Rc::ptr_eq(tile, selected_rc_ref) && *rotation == b_rot,
+                _ => false,
+            });
+
+            if !already_exists {
+                b_vec.push(PatternEntry::Tile {
+                    tile: Rc::clone(selected_rc_ref),
+                    rotation: b_rot,
+                });
+            }
+        } else {
+            println!("Couldn't find matching connection from B to A");
+        }
+
+        println!("Added tile to {:?} with rotation {:?}", side, new_rot);
+    }
+
+    debug_print_connections("A", selected_rc_ref);
+    debug_print_connections("B", &b_tile_rc_ref);
+}
+
+fn debug_print_connections(label: &str, tile_rc: &Rc<RefCell<Tile>>) {
+    let tile = (**tile_rc).borrow();
+    println!("=== Connections for {} ({:p}) ===", label, tile_rc);
+
+    for (side, vec) in [
+        (Direction::Top, &tile.connections.top),
+        (Direction::Right, &tile.connections.right),
+        (Direction::Bottom, &tile.connections.bottom),
+        (Direction::Left, &tile.connections.left),
+    ] {
+        for (i, entry) in vec.iter().enumerate() {
+            match entry {
+                PatternEntry::Tile { tile: other_tile, rotation } => {
+                    println!(
+                        "  {:?}[{}] → Tile({:p}) @ rot {:?}",
+                        side, i, other_tile, rotation
+                    );
+                }
+                _ => {
+                    println!(
+                        "  {:?}[{}] → Non-tile entry (ignored)",
+                        side, i
+                    );
+                }
+            }
+        }
+    }
+
+    println!("====================================\n");
 }
 
 /// Call this whenever you rotate a neighbour tile in the grid.
@@ -1203,19 +1686,17 @@ fn rotate_connection_handler_common(
         for attempt in 0..3 { // try 90°, 180°, 270°
             let expected_rot = Rotation::R0.rotated_cw_by(simulated_rot.clone());
 
-            let already_exists = [
-                &a_selected.connections.top,
-                &a_selected.connections.right,
-                &a_selected.connections.bottom,
-                &a_selected.connections.left,
-            ]
-            .iter()
-            .any(|vec| {
-                vec.iter().any(|entry| match entry {
-                    PatternEntry::Tile { tile: existing, rotation: existing_rot } =>
-                        Rc::ptr_eq(existing, tile_rc_ref) && *existing_rot == expected_rot,
-                    _ => false,
-                })
+            let connection_list = match side {
+                Direction::Top    => &a_selected.connections.top,
+                Direction::Right  => &a_selected.connections.right,
+                Direction::Bottom => &a_selected.connections.bottom,
+                Direction::Left   => &a_selected.connections.left,
+            };
+
+            let already_exists = connection_list.iter().any(|entry| match entry {
+                PatternEntry::Tile { tile: existing, rotation: existing_rot } =>
+                    Rc::ptr_eq(&existing, tile_rc_ref) && *existing_rot == expected_rot,
+                _ => false,
             });
 
             println!(
@@ -1322,19 +1803,17 @@ fn rotate_connection_handler(
         for attempt in 0..3 { // try 90°, 180°, 270°
             let expected_rot = Rotation::R0.rotated_cw_by(simulated_rot.clone());
 
-            let already_exists = [
-                &a_selected.connections.top,
-                &a_selected.connections.right,
-                &a_selected.connections.bottom,
-                &a_selected.connections.left,
-            ]
-            .iter()
-            .any(|vec| {
-                vec.iter().any(|entry| match entry {
-                    PatternEntry::Tile { tile: existing, rotation: existing_rot } =>
-                        Rc::ptr_eq(existing, tile_rc_ref) && *existing_rot == expected_rot,
-                    _ => false,
-                })
+            let connection_list = match side {
+                Direction::Top    => &a_selected.connections.top,
+                Direction::Right  => &a_selected.connections.right,
+                Direction::Bottom => &a_selected.connections.bottom,
+                Direction::Left   => &a_selected.connections.left,
+            };
+
+            let already_exists = connection_list.iter().any(|entry| match entry {
+                PatternEntry::Tile { tile: existing, rotation: existing_rot } =>
+                    Rc::ptr_eq(&existing, tile_rc_ref) && *existing_rot == expected_rot,
+                _ => false,
             });
 
             println!(
@@ -1364,6 +1843,7 @@ fn rotate_connection_handler(
     // ─────────────────────────────────────────────────────────────
     //
     // ─── 1. mutate the selected tile (A) ──────────────────────
+
     let (neighbour_rc_ref, old_rot) = {
         let a_selected_ref: &RefCell<Tile> = selected_rc_ref.borrow();
         let mut a_selected: std::cell::RefMut<'_, Tile> = a_selected_ref.borrow_mut();
@@ -1383,6 +1863,10 @@ fn rotate_connection_handler(
             return;                                     // clicked a CommonPattern → nothing to do
         }
     };
+
+    if Rc::ptr_eq(selected_rc_ref, &neighbour_rc_ref) {
+        return;
+    }
 
     {
         let b_selected_ref: &RefCell<Tile> = neighbour_rc_ref.borrow();
@@ -1570,7 +2054,6 @@ fn remove_connection_handler(
     }
 }
 
-// ───────── helper used above ─────────
 fn points_to_selected(entry: &PatternEntry, selected: &Rc<RefCell<Tile>>) -> bool {
     matches!(entry,
         PatternEntry::Tile { tile, .. }
@@ -1593,6 +2076,33 @@ fn get_texture_from_entry(entry: &PatternEntry) -> (egui::TextureHandle, Rotatio
     }
 }
 
+fn rotated_direction(facing: Direction, rotation: Rotation) -> Direction {
+    use Direction::*;
+    use Rotation::*;
+
+    match rotation {
+        R0 => facing,
+        R90 => match facing {
+            Top => Right,
+            Right => Bottom,
+            Bottom => Left,
+            Left => Top,
+        },
+        R180 => match facing {
+            Top => Bottom,
+            Right => Left,
+            Bottom => Top,
+            Left => Right,
+        },
+        R270 => match facing {
+            Top => Left,
+            Right => Top,
+            Bottom => Right,
+            Left => Bottom,
+        },
+    }
+}
+
 fn rotation_to_uv(rotation: Rotation) -> (egui::Pos2, egui::Pos2) {
     use egui::pos2;
     match rotation {
@@ -1600,6 +2110,20 @@ fn rotation_to_uv(rotation: Rotation) -> (egui::Pos2, egui::Pos2) {
         Rotation::R90 => (pos2(1.0, 0.0), pos2(0.0, 1.0)),
         Rotation::R180 => (pos2(1.0, 1.0), pos2(0.0, 0.0)),
         Rotation::R270 => (pos2(0.0, 1.0), pos2(1.0, 0.0)),
+    }
+}
+
+fn draw_border_sides(ui: &egui::Ui, rect: egui::Rect, sides: &[Direction]) {
+    let stroke = egui::Stroke::new(3.0, egui::Color32::LIGHT_GREEN);
+
+    for side in sides {
+        let (p1, p2) = match side {
+            Direction::Top => (rect.left_top(), rect.right_top()),
+            Direction::Right => (rect.right_top(), rect.right_bottom()),
+            Direction::Bottom => (rect.left_bottom(), rect.right_bottom()),
+            Direction::Left => (rect.left_top(), rect.left_bottom()),
+        };
+        ui.painter().line_segment([p1, p2], stroke);
     }
 }
 
@@ -1707,6 +2231,21 @@ fn side_to_json(side: &[PatternEntry]) -> Value {
 }
 
 fn main() -> eframe::Result<()> {
+
+
+    {
+        use Direction::*;
+        use Rotation::*;
+
+        assert_eq!(Top.rotated_cw_by(R0), Top);
+        assert_eq!(Top.rotated_cw_by(R90), Right);
+        assert_eq!(Top.rotated_cw_by(R180), Bottom);
+        assert_eq!(Top.rotated_cw_by(R270), Left);
+
+        assert_eq!(Right.rotated_ccw_by(R90), Top);
+        assert_eq!(Bottom.rotated_ccw_by(R180), Top);
+    }
+
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default().with_inner_size([1600.0, 900.0]),
         ..Default::default()

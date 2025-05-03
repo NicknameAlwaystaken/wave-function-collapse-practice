@@ -1,159 +1,2954 @@
 {
-  "connections": {
-    "Unnamed": {
+  "connections": {},
+  "tiles": {
+    "connection_1.png": {
       "bottom": {
-        "allow": []
-      },
-      "left": {
-        "allow": []
-      },
-      "right": {
-        "allow": []
-      },
-      "top": {
         "allow": [
           {
-            "name": "vine5.png",
-            "rotation": 90
-          },
-          {
-            "name": "vine2.png",
+            "name": "no_connection_2 copy.png",
             "rotation": 0
           },
           {
-            "name": "vine5.png",
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
             "rotation": 270
           },
           {
-            "name": "vine2.png",
+            "name": "no_connection_1.png",
             "rotation": 180
           },
           {
-            "name": "vine3.png",
+            "name": "no_connection_1.png",
             "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
           }
         ]
-      }
-    },
-    "Unnamed 1": {
-      "bottom": {
-        "allow": []
       },
       "left": {
-        "allow": []
+        "allow": [
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          }
+        ]
       },
       "right": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 0
+          }
+        ]
       },
       "top": {
         "allow": [
           {
-            "name": "BBC_block.png",
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
             "rotation": 0
           },
           {
-            "name": "vine3.png",
-            "rotation": 0
-          },
-          {
-            "name": "vine1.png",
-            "rotation": 0
-          },
-          {
-            "name": "vine2.png",
+            "name": "connection_5.png",
             "rotation": 90
           },
           {
-            "name": "vine5.png",
+            "name": "connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          }
+        ]
+      }
+    },
+    "connection_2.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "connection_5.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
             "rotation": 0
           }
         ]
       }
-    }
-  },
-  "tiles": {
-    "BBC_block.png": {
+    },
+    "connection_3.png": {
       "bottom": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          }
+        ]
       },
       "left": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 180
+          }
+        ]
       },
       "right": {
-        "allow": []
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          }
+        ]
       },
       "top": {
-        "allow": []
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          }
+        ]
       }
     },
-    "vine1.png": {
+    "connection_4.png": {
       "bottom": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          }
+        ]
       },
       "left": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          }
+        ]
       },
       "right": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          }
+        ]
       },
       "top": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          }
+        ]
       }
     },
-    "vine2.png": {
+    "connection_5.png": {
       "bottom": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          }
+        ]
       },
       "left": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          }
+        ]
       },
       "right": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 90
+          }
+        ]
       },
       "top": {
-        "allow": []
+        "allow": [
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          }
+        ]
       }
     },
-    "vine3.png": {
+    "connection_6.png": {
       "bottom": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          }
+        ]
       },
       "left": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          }
+        ]
       },
       "right": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          }
+        ]
       },
       "top": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          }
+        ]
       }
     },
-    "vine4.png": {
+    "connection_7.png": {
       "bottom": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          }
+        ]
       },
       "left": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          }
+        ]
       },
       "right": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          }
+        ]
       },
       "top": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          }
+        ]
       }
     },
-    "vine5.png": {
+    "connection_8.png": {
       "bottom": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          }
+        ]
       },
       "left": {
-        "allow": []
+        "allow": [
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          }
+        ]
       },
       "right": {
-        "allow": []
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          }
+        ]
       },
       "top": {
-        "allow": []
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          }
+        ]
+      }
+    },
+    "no_connection_1.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          }
+        ]
+      }
+    },
+    "no_connection_2 copy.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          }
+        ]
+      }
+    },
+    "no_connection_2.png": {
+      "bottom": {
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          }
+        ]
+      },
+      "left": {
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          }
+        ]
+      },
+      "right": {
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 90
+          }
+        ]
+      },
+      "top": {
+        "allow": [
+          {
+            "name": "no_connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_3.png",
+            "rotation": 180
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 90
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 270
+          },
+          {
+            "name": "no_connection_2 copy.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 0
+          },
+          {
+            "name": "connection_1.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_5.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_4.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_8.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 180
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 90
+          },
+          {
+            "name": "connection_7.png",
+            "rotation": 270
+          },
+          {
+            "name": "connection_6.png",
+            "rotation": 0
+          }
+        ]
       }
     }
   }
